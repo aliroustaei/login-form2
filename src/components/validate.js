@@ -2,33 +2,33 @@ export const validate = (data, type) => {
   const errors = {};
 
   if (!data.email) {
-    errors.email = "لطفا ایمیل را وارد کنید";
+    errors.email = "Please enter the email";
     // eslint-disable-next-line no-useless-escape
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) {
-    errors.email = "ایمیل معتبر نیست";
+    errors.email = "Email is not valid";
   } else {
     delete errors.email;
   }
 
   if (!data.password) {
-    errors.password = "لطفا پسورد را وارد کنید";
+    errors.password = "Please enter the password";
   } else if (data.password.length < 6) {
-    errors.password = "پسورد باید بیشتر از 6 کارکتر باشد";
+    errors.password = "Password must be longer than 6 characters";
   } else {
     delete errors.password;
   }
 
   if (type === "signup") {
     if (!data.name.trim()) {
-      errors.name = "لطفا نام کاربری را وارد کنید";
+      errors.name = "Please enter the username";
     } else {
       delete errors.name;
     }
 
     if (!data.confirmPassword) {
-      errors.confirmPassword = "لطفا پسورد را تکرار کنید";
+      errors.confirmPassword = "Please enter the password again";
     } else if (data.confirmPassword !== data.password) {
-      errors.confirmPassword = "پسور مطاقبت ندارد";
+      errors.confirmPassword = "Password does not match";
     } else {
       delete errors.confirmPassword;
     }
@@ -36,7 +36,7 @@ export const validate = (data, type) => {
     if (data.isAccepted) {
       delete errors.isAccepted;
     } else {
-      errors.isAccepted = "لطفا قوانین را بپذیرید";
+      errors.isAccepted = "Please accept the privacy policy";
     }
   }
 

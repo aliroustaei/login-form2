@@ -40,7 +40,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!Object.keys(errors).length) {
-      notify("success", "ثبت نام با موفقیت انجام شد");
+      notify("success", "ُSign up completed successfully");
     } else {
       setShow({
         name: true,
@@ -49,7 +49,7 @@ const SignUp = () => {
         confirmPassword: true,
         isAccepted: true,
       });
-      notify("error", "خطایی رخ داده است");
+      notify("error", "An error has occurred");
     }
   };
 
@@ -72,7 +72,7 @@ const SignUp = () => {
             }
             onClick={loginH}
           >
-            ثبت نام
+            Sign Up
           </button>
         </div>
         <div className={styles.btnGroup}>
@@ -85,7 +85,7 @@ const SignUp = () => {
             }
             onClick={loginH}
           >
-            ورود
+            Log In
           </button>
         </div>
       </div>
@@ -173,7 +173,7 @@ const SignUp = () => {
                 onChange={changeHandler}
                 onKeyUp={focusHandler}
               />
-              <label>قوانین و شرایط را می پذیرم</label>
+              <label>I accept the privacy policy</label>
             </div>
 
             {errors.isAccepted && show.isAccepted && (

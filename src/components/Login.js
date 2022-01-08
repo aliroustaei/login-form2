@@ -34,13 +34,13 @@ const Login = (props) => {
     e.preventDefault();
 
     if (!Object.keys(errors).length) {
-      notify("success", "خوش آمدید");
+      notify("success", "Welcome back");
     } else {
       setShow({
         email: true,
         password: true,
       });
-      notify("error", "خطایی رخ داده است");
+      notify("error", "An error has occurred");
     }
   };
 
