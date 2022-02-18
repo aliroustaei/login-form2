@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { validate } from "./validate";
 import "react-toastify/dist/ReactToastify.css";
-import { notify } from "./toast";
+import { notify } from "../toast";
 import styles from "./SignUp.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const [data, setData] = useState({
@@ -13,17 +15,14 @@ const Login = (props) => {
   });
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     setErrors(validate(data, "login"));
   }, [data]);
 
   const changeHandler = (e) => {
-    if (e.target.name === "isAccepted") {
-      setData({ ...data, [e.target.name]: e.target.checked });
-    } else {
-      setData({ ...data, [e.target.name]: e.target.value });
-    }
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const focusHandler = (e) => {
@@ -34,7 +33,20 @@ const Login = (props) => {
     e.preventDefault();
 
     if (!Object.keys(errors).length) {
-      notify("success", "Welcome back");
+      axios
+        .post("https://api.freerealapi.com/auth/login", {
+          email: data.email,
+          password: data.password,
+        })
+        .then((res) => {
+          localStorage.setItem("token", res.data.token);
+          notify("success", "Welcome back");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          notify("error", "Please submit again");
+        });
     } else {
       setShow({
         email: true,

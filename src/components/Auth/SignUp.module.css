@@ -26,7 +26,8 @@
 }
 
 .formContainer2 {
-  transform: translateX(-100%);
+  transform: translateX(-63%);
+  top: 5rem;
 }
 
 .formContainer4 {
@@ -59,6 +60,11 @@
 
 .formField:nth-child(5) {
   height: 20px;
+}
+
+.formField:nth-child(5) label {
+  margin-bottom: 0;
+  margin-left: 5px;
 }
 
 .formField label {

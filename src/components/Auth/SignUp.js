@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { validate } from "./validate";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { notify } from "./toast";
+import { notify } from "../toast";
 import styles from "./SignUp.module.css";
 import Login from "./Login";
+import axios from "axios";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -40,7 +40,17 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!Object.keys(errors).length) {
-      notify("success", "ُSign up completed successfully");
+      axios
+        .post("https://api.freerealapi.com/auth/register", {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        })
+        .then((res) => {
+          localStorage.setItem("token", res.data.token);
+          notify("success", "ُSign up completed successfully");
+        })
+        .catch(() => notify("error", "Please submit again"));
     } else {
       setShow({
         name: true,
@@ -67,8 +77,8 @@ const SignUp = () => {
           <button
             className={
               !toggle
-                ? `${styles.toggleBtn} ${styles.toggleBtn2} `
-                : `${styles.toggleBtn} ${styles.toggleBtn1} `
+                ? `${styles.toggleBtn} ${styles.toggleBtn1} `
+                : `${styles.toggleBtn} ${styles.toggleBtn2} `
             }
             onClick={loginH}
           >
@@ -80,8 +90,8 @@ const SignUp = () => {
             type="button"
             className={
               toggle
-                ? `${styles.toggleBtn} ${styles.toggleBtn2} `
-                : `${styles.toggleBtn} ${styles.toggleBtn1} `
+                ? `${styles.toggleBtn} ${styles.toggleBtn1} `
+                : `${styles.toggleBtn} ${styles.toggleBtn2} `
             }
             onClick={loginH}
           >
@@ -92,8 +102,8 @@ const SignUp = () => {
       <form
         className={
           toggle
-            ? `${styles.formContainer1} ${styles.formContainer} `
-            : `${styles.formContainer3} ${styles.formContainer} `
+            ? `${styles.formContainer3} ${styles.formContainer} `
+            : `${styles.formContainer1} ${styles.formContainer} `
         }
         onSubmit={submitHandler}
       >
@@ -186,7 +196,6 @@ const SignUp = () => {
         </div>
       </form>
       <Login toggle={toggle} />
-      <ToastContainer className={styles.notify} />
     </div>
   );
 };

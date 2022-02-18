@@ -6,3 +6,17 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+:root {
+  --primary: #ffe31e;
+  --dark: #2a477e;
+  --white: #fdfdfd;
+  --black: rgb(41, 41, 41);
+  --grey: #bbbaba;
+  --shadow: 0px 0px 20px -15px rgba(0, 0, 0, 0.6);
+}
