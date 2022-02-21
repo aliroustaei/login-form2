@@ -1,21 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { validate } from "./validate";
 import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../toast";
 import styles from "./SignUp.module.css";
 import { useNavigate } from "react-router-dom";
+//Context
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Login = (props) => {
   const [data, setData] = useState({
-    name: "",
     email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState({});
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     setErrors(validate(data, "login"));
@@ -40,11 +41,11 @@ const Login = (props) => {
         })
         .then((res) => {
           localStorage.setItem("token", res.data.token);
+          setAuth(res.data.token);
           notify("success", "Welcome back");
           navigate("/");
         })
         .catch((err) => {
-          console.log(err);
           notify("error", "Please submit again");
         });
     } else {

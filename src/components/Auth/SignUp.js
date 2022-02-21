@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { validate } from "./validate";
 import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../toast";
 import styles from "./SignUp.module.css";
 import Login from "./Login";
 import axios from "axios";
+//Context
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -19,6 +21,7 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState({});
   const [toggle, setToggle] = useState(true);
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     setErrors(validate(data, "signup"));
@@ -48,6 +51,7 @@ const SignUp = () => {
         })
         .then((res) => {
           localStorage.setItem("token", res.data.token);
+          setAuth(res.data.token);
           notify("success", "ُSign up completed successfully");
         })
         .catch(() => notify("error", "Please submit again"));
